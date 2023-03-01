@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "453114747271",
+    "project_id": "marauders-quest",
+    "storage_bucket": "marauders-quest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453114747271:android:4ee788bbb3c95cbc21db22",
+        "android_client_info": {
+          "package_name": "com.example.maraudersquest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453114747271-tdkkeij8ounieeuvjmdd98uje86o6e68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABYwpzYLoQIgbCW2ZuskO9MYMKD75JYb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453114747271-tdkkeij8ounieeuvjmdd98uje86o6e68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
