@@ -11,6 +11,7 @@ import com.example.maraudersquest.index.ui.Index
 import com.example.maraudersquest.login.ui.Login
 import com.example.maraudersquest.rutaElegida.ui.RutaElegida
 import com.example.maraudersquest.rutas.ui.Rutas
+import com.example.maraudersquest.splashScreen.ui.SplashScreen
 
 
 @Composable
@@ -20,6 +21,7 @@ fun AppNavigation() {
     NavHost(navController = navigationController, startDestination = AppScreens.SplashScreen.ruta)
 
     {
+        composable(AppScreens.SplashScreen.ruta) { SplashScreen(navigationController) }
         composable(AppScreens.Login.ruta) { Login(navigationController) }
         composable(AppScreens.Index.ruta) { Index(navigationController) }
         composable(AppScreens.Ciudades.ruta) { Ciudades(navigationController) }
