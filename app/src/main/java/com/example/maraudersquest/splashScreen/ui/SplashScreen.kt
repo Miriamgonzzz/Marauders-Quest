@@ -13,9 +13,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.maraudersquest.R
 import com.example.maraudersquest.navegacion.AppScreens
 import kotlinx.coroutines.delay
-import com.example.maraudersquest.R
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
