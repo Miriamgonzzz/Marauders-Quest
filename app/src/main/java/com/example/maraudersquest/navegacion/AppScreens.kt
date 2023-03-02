@@ -1,12 +1,12 @@
 package com.example.maraudersquest.navegacion
 
 sealed class AppScreens(val ruta: String){
-    object SplashScreen: AppScreens("com/example/maraudersquest/splashScreen")
-    object Login: AppScreens("com/example/maraudersquest/login")
-    object Index: AppScreens("com/example/maraudersquest/index")
-    object Ciudades: AppScreens("com/example/maraudersquest/ciudades")
-    object Rutas: AppScreens("com/example/maraudersquest/rutas")
-    object RutaElegida: AppScreens("com/example/maraudersquest/rutaElegida")
-    object Baul: AppScreens("com/example/maraudersquest/baul")
-    object Historial: AppScreens("com/example/maraudersquest/historial")
+    object SplashScreen: AppScreens("splashScreen")
+    object Login: AppScreens("login")
+    object Index: AppScreens("index")
+    object Ciudades: AppScreens("ciudades")
+    object Rutas: AppScreens("rutas")
+    object RutaElegida: AppScreens("rutaElegida")
+    object Baul: AppScreens("baul")
+    object Historial: AppScreens("historial")
 }
