@@ -33,7 +33,7 @@ fun Login(navController: NavController) {
         loggedUser!!.displayName?.let {
             PopUpLogin(it) {
                 viewModel.logIn()
-                navController.navigate("ciudades")
+                navController.navigate("index")
 
             }
         }
