@@ -30,6 +30,13 @@ fun Login(navController: NavController) {
     val loggedUser by viewModel.loggedUser().observeAsState(null)
     val logged by viewModel.logged().observeAsState(false)
     if (loggedUser != null && !logged) {
+        /**
+         * loggedUser!! hace referencia a que es un usuario estrictamente logueado, "aseguramos"
+         * a la aplicación que no hay posibilidad de que no esté logueado correctamente.
+         * displayName? hace referencia a que el displayName puede ser o no ser un String, que
+         * es lo que está esperando para ejecutar lo que viene dentro de los corchetes (la función
+         * PopUpLogin()
+         */
         loggedUser!!.displayName?.let {
             PopUpLogin(it) {
                 viewModel.logIn()
