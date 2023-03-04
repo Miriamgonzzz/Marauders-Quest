@@ -18,8 +18,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 @Composable
 fun Ciudades(navController: NavController){
     val activity = LocalContext.current as MainActivity
+
     Column() {
-        Text(text = "Estás en la página Ciudades")
+        Text(text = "Estás en la página Ciudades ")
         Button(
             onClick = {
                 val gso: GoogleSignInOptions =

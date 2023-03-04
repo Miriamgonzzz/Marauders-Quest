@@ -15,8 +15,10 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginViewModel() : ViewModel() {
+
     private val isLoading = MutableLiveData(false)
     private val logged = MutableLiveData(false)
     private val hasGoogleError = MutableLiveData(false)
@@ -50,9 +52,12 @@ class LoginViewModel() : ViewModel() {
 
     fun finishLogIn(task: Task<GoogleSignInAccount>) {
         try {
+            //en la variable account guardamos todos los datos de Google del usuario
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
 
             account?.idToken?.let { token ->
+                //en la variable auth se guardan los datos del usuario (almacenados en Firebase,
+                //en la bbdd de la aplicación) que actualmente está logueado
                 val auth = FirebaseAuth.getInstance()
                 val credential = GoogleAuthProvider.getCredential(token, null)
                 auth.signInWithCredential(credential)
@@ -61,6 +66,10 @@ class LoginViewModel() : ViewModel() {
                             val user = auth.currentUser
                             email.postValue(user?.email)
                             loggedUser.postValue(auth.currentUser)
+
+                            //AQUI TENGO QUE GUARDAR AL USUARIO EN LA BASE DE DATOS
+                            //MINIMO EL MAIL Y EL NOMBRE, ASÍ LO BUSCAMOS POR MAIL
+
                         }else {
                             hasGoogleError.postValue(true)
                             googleError.postValue("Ha ocurrido un error al iniciar sesión")
@@ -75,6 +84,10 @@ class LoginViewModel() : ViewModel() {
             e.message?.let { Log.d("Login", "error: "+it) }
 
         }
+    }
+
+    fun saveUser(){
+
     }
 
 }
