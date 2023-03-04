@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class LoginViewModel() : ViewModel() {
 
@@ -30,6 +31,8 @@ class LoginViewModel() : ViewModel() {
     fun logged(): LiveData<Boolean> = logged
     fun googleError(): LiveData<String> = googleError
     fun hasGoogleError(): LiveData<Boolean> = hasGoogleError
+    private val db = FirebaseFirestore.getInstance()
+    private val usersCollectionName = "users"
 
     fun logIn() {
         logged.postValue(true)
@@ -66,9 +69,11 @@ class LoginViewModel() : ViewModel() {
                             val user = auth.currentUser
                             email.postValue(user?.email)
                             loggedUser.postValue(auth.currentUser)
+                            val pruebaUsuario = account.email
 
-                            //AQUI TENGO QUE GUARDAR AL USUARIO EN LA BASE DE DATOS
-                            //MINIMO EL MAIL Y EL NOMBRE, ASÍ LO BUSCAMOS POR MAIL
+                            if (pruebaUsuario != null) {
+                                createUser(pruebaUsuario)
+                            }
 
                         }else {
                             hasGoogleError.postValue(true)
@@ -86,8 +91,22 @@ class LoginViewModel() : ViewModel() {
         }
     }
 
-    fun saveUser(){
+    fun createUser(
+        user: String
+    ) {
+        val userData = hashMapOf(
+            "email" to user
+        )
 
+        db.collection(usersCollectionName)
+            .document(user)
+            .set(userData, SetOptions.merge())
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
     }
 
 }
