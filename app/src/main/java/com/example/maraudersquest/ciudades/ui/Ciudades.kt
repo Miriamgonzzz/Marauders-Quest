@@ -11,6 +11,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.maraudersquest.MainActivity
+import com.example.maraudersquest.index.ui.correoUsuario
+import com.example.maraudersquest.index.ui.usuarioLogueado
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,8 +20,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 @Composable
 fun Ciudades(navController: NavController){
     val activity = LocalContext.current as MainActivity
+
     Column() {
-        Text(text = "Estás en la página Ciudades")
+        Text(text = "Estás en la página Ciudades $correoUsuario")
         Button(
             onClick = {
                 val gso: GoogleSignInOptions =

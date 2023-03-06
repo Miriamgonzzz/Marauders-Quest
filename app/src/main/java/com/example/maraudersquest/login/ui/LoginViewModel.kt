@@ -15,8 +15,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class LoginViewModel() : ViewModel() {
+
     private val isLoading = MutableLiveData(false)
     private val logged = MutableLiveData(false)
     private val hasGoogleError = MutableLiveData(false)
@@ -28,6 +31,8 @@ class LoginViewModel() : ViewModel() {
     fun logged(): LiveData<Boolean> = logged
     fun googleError(): LiveData<String> = googleError
     fun hasGoogleError(): LiveData<Boolean> = hasGoogleError
+    private val db = FirebaseFirestore.getInstance()
+    private val usersCollectionName = "users"
 
     fun logIn() {
         logged.postValue(true)
@@ -50,9 +55,11 @@ class LoginViewModel() : ViewModel() {
 
     fun finishLogIn(task: Task<GoogleSignInAccount>) {
         try {
+            //en la variable account guardamos todos los datos de Google del usuario
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
 
             account?.idToken?.let { token ->
+                //en la variable auth se guardan los datos del usuario que actualmente está logueado
                 val auth = FirebaseAuth.getInstance()
                 val credential = GoogleAuthProvider.getCredential(token, null)
                 auth.signInWithCredential(credential)
@@ -61,6 +68,12 @@ class LoginViewModel() : ViewModel() {
                             val user = auth.currentUser
                             email.postValue(user?.email)
                             loggedUser.postValue(auth.currentUser)
+                            val databaseInsertUser = user?.email
+
+                            if (databaseInsertUser != null) {
+                                createUser(databaseInsertUser)
+                            }
+
                         }else {
                             hasGoogleError.postValue(true)
                             googleError.postValue("Ha ocurrido un error al iniciar sesión")
@@ -75,6 +88,33 @@ class LoginViewModel() : ViewModel() {
             e.message?.let { Log.d("Login", "error: "+it) }
 
         }
+    }
+    //función para insertar en el FireBase de la aplicación el usuario por medio del campo único
+    //de email
+    private fun createUser(user: String) {
+
+        val userData = hashMapOf("email" to user)
+
+        db.collection(usersCollectionName)
+            .document(user)
+            .set(userData, SetOptions.merge())
+            .addOnSuccessListener {
+                //aquí se pondría un mensaje o popUp de bienvenida
+            }
+            .addOnFailureListener {
+                //aquí si ha fallado algo durante el registro con Google
+            }
+    }
+
+    //función para obtener el usuario de Firebase de la aplicación
+    fun getUser(user: String){
+
+        db.collection(usersCollectionName)
+            .document(user)
+            .get()
+            .addOnSuccessListener {
+
+            }
     }
 
 }
