@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.maraudersquest.MainActivity
 import com.example.maraudersquest.common.TopBar
+import com.example.maraudersquest.common.logOut
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -29,6 +30,7 @@ fun Login(navController: NavController) {
     val viewModel: LoginViewModel by activity.viewModels()
     val loggedUser by viewModel.loggedUser().observeAsState(null)
     val logged by viewModel.logged().observeAsState(false)
+
     if (loggedUser != null && !logged) {
         /**
          * loggedUser!! hace referencia a que es un usuario estrictamente logueado, "aseguramos"
@@ -38,6 +40,7 @@ fun Login(navController: NavController) {
          * PopUpLogin()
          */
         loggedUser!!.displayName?.let {
+
             PopUpLogin(it) {
                 viewModel.logIn()
                 navController.navigate("index")

@@ -59,8 +59,7 @@ class LoginViewModel() : ViewModel() {
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
 
             account?.idToken?.let { token ->
-                //en la variable auth se guardan los datos del usuario (almacenados en Firebase,
-                //en la bbdd de la aplicación) que actualmente está logueado
+                //en la variable auth se guardan los datos del usuario que actualmente está logueado
                 val auth = FirebaseAuth.getInstance()
                 val credential = GoogleAuthProvider.getCredential(token, null)
                 auth.signInWithCredential(credential)
@@ -69,10 +68,10 @@ class LoginViewModel() : ViewModel() {
                             val user = auth.currentUser
                             email.postValue(user?.email)
                             loggedUser.postValue(auth.currentUser)
-                            val pruebaUsuario = account.email
+                            val databaseInsertUser = user?.email
 
-                            if (pruebaUsuario != null) {
-                                createUser(pruebaUsuario)
+                            if (databaseInsertUser != null) {
+                                createUser(databaseInsertUser)
                             }
 
                         }else {
@@ -90,21 +89,30 @@ class LoginViewModel() : ViewModel() {
 
         }
     }
+    //función para insertar en el FireBase de la aplicación el usuario por medio del campo único
+    //de email
+    private fun createUser(user: String) {
 
-    fun createUser(
-        user: String
-    ) {
-        val userData = hashMapOf(
-            "email" to user
-        )
+        val userData = hashMapOf("email" to user)
 
         db.collection(usersCollectionName)
             .document(user)
             .set(userData, SetOptions.merge())
             .addOnSuccessListener {
-
+                //aquí se pondría un mensaje o popUp de bienvenida
             }
             .addOnFailureListener {
+                //aquí si ha fallado algo durante el registro con Google
+            }
+    }
+
+    //función para obtener el usuario de Firebase de la aplicación
+    fun getUser(user: String){
+
+        db.collection(usersCollectionName)
+            .document(user)
+            .get()
+            .addOnSuccessListener {
 
             }
     }
