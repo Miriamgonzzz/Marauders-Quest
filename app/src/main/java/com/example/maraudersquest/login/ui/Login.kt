@@ -19,8 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.maraudersquest.MainActivity
-import com.example.maraudersquest.common.TopBar
-import com.example.maraudersquest.common.logOut
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -48,18 +46,13 @@ fun Login(navController: NavController) {
             }
         }
     }
-    Scaffold(
-        topBar = { TopBar(pageName = "Iniciar sesión", navController = navController, backbutton = false) },
-        modifier = Modifier.fillMaxSize()
-    ) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Image(modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.FillWidth,painter = painterResource(id = R.drawable.xenoblade_banner_large), contentDescription = "Banner")
             LoginForm(navController, viewModel, activity)
         }
-    }
 }
 
 
@@ -116,7 +109,7 @@ fun PopUpLogin(name: String, onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         text= {
             Text(
-                text = name,
+                text = "Bienvenido/a $name",
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface
             )

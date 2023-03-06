@@ -1,5 +1,6 @@
 package com.example.maraudersquest.common
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -26,34 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.firestore.FirebaseFirestore
 
-@Composable
-fun TopBar(backbutton: Boolean = true, navController: NavController, pageName: String = "") {
-    TopAppBar (
-        backgroundColor = MaterialTheme.colors.primary
-    ) {
-        var title = "Maraudercito"
-        if (pageName != ""){
-            title += " - $pageName"
-        }
-        if (backbutton) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow Back",
-                modifier = Modifier.clickable { navController.popBackStack() })
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-
-        Text(
-            text = title,
-            style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.onPrimary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(10.dp)
-        )
-
-    }
-}
-
+//función para desloguear desde la cuenta de Google
 @Composable
 fun logOut(){
     val activity = LocalContext.current as MainActivity
@@ -64,4 +38,17 @@ fun logOut(){
             .build()
     val client = GoogleSignIn.getClient(activity, gso)
     Auth.GoogleSignInApi.signOut(client.asGoogleApiClient())
+}
+
+//función para reproducir la canción de fondo
+@Composable
+fun PlayAudio(){
+
+    val context = LocalContext.current
+    val mp : MediaPlayer = MediaPlayer.create(context, R.raw.overture)
+
+    mp.start()
+
+    mp.isLooping = true
+
 }

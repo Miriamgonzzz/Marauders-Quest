@@ -8,6 +8,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
@@ -19,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 val auth = FirebaseAuth.getInstance()
 val usuarioLogueado = auth.currentUser
-val correoUsuario = usuarioLogueado?.email
+var correoUsuario = usuarioLogueado?.email
 
 @Composable
 fun Index(navController: NavController){
@@ -55,8 +57,6 @@ fun Index(navController: NavController){
             }
 
             Spacer(modifier = Modifier.size(8.dp))
-
-            Text(text = "Hola $correoUsuario ")
 
             IconButton(onClick = { navController.navigate("Ciudades")},modifier = Modifier
                 .fillMaxWidth()
