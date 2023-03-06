@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -13,6 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.maraudersquest.R
+import com.google.firebase.auth.FirebaseAuth
+
+val auth = FirebaseAuth.getInstance()
+val usuarioLogueado = auth.currentUser
+val correoUsuario = usuarioLogueado?.email
 
 @Composable
 fun Index(navController: NavController){
@@ -30,11 +37,16 @@ fun Index(navController: NavController){
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = "Logo_MaraudersQuest",
-                modifier = Modifier.fillMaxWidth().size(250.dp).padding(top = 15.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(250.dp)
+                    .padding(top = 15.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
 
-            IconButton(onClick = { navController.navigate("rutaElegida")},modifier = Modifier.fillMaxWidth().size(100.dp)) {
+            IconButton(onClick = { navController.navigate("rutaElegida")},modifier = Modifier
+                .fillMaxWidth()
+                .size(100.dp)) {
                 Image(
                     painter = painterResource(R.drawable.nueva_partida),
                     contentDescription = "Nuevapartida",
@@ -44,7 +56,11 @@ fun Index(navController: NavController){
 
             Spacer(modifier = Modifier.size(8.dp))
 
-            IconButton(onClick = { navController.navigate("")},modifier = Modifier.fillMaxWidth().size(100.dp)) {
+            Text(text = "Hola $correoUsuario ")
+
+            IconButton(onClick = { navController.navigate("Ciudades")},modifier = Modifier
+                .fillMaxWidth()
+                .size(100.dp)) {
                 Image(
                     painter = painterResource(R.drawable.continuar),
                     contentDescription = "ContinuarPartida",
@@ -54,7 +70,9 @@ fun Index(navController: NavController){
 
             Spacer(modifier = Modifier.size(8.dp))
 
-            IconButton(onClick = { navController.navigate("")},modifier = Modifier.fillMaxWidth().size(100.dp)) {
+            IconButton(onClick = { navController.navigate("Ciudades")},modifier = Modifier
+                .fillMaxWidth()
+                .size(100.dp)) {
                 Image(
                     painter = painterResource(R.drawable.salir),
                     contentDescription = "Salir",
