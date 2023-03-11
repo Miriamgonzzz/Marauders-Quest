@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 val auth = FirebaseAuth.getInstance()
 val usuarioLogueado = auth.currentUser
 var correoUsuario = usuarioLogueado?.email
+var nombreUsuario = usuarioLogueado?.displayName
 
 @Composable
 fun Index(navController: NavController){

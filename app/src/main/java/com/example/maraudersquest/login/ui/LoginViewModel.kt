@@ -25,6 +25,7 @@ class LoginViewModel() : ViewModel() {
     private val hasGoogleError = MutableLiveData(false)
     private val googleError = MutableLiveData("")
     private val email = MutableLiveData("")
+    private val name = MutableLiveData("")
     private val loggedUser = MutableLiveData(FirebaseAuth.getInstance().currentUser)
     fun loggedUser(): MutableLiveData<FirebaseUser?> = loggedUser
     fun isLoading(): LiveData<Boolean> = isLoading
@@ -66,12 +67,14 @@ class LoginViewModel() : ViewModel() {
                     .addOnCompleteListener{
                         if (it.isSuccessful) {
                             val user = auth.currentUser
+                            name.postValue(user?.displayName)
                             email.postValue(user?.email)
                             loggedUser.postValue(auth.currentUser)
-                            val databaseInsertUser = user?.email
+                            val databaseInsertUserMail = user?.email
+                            val databaseInsertUserName = user?.displayName
 
-                            if (databaseInsertUser != null) {
-                                createUser(databaseInsertUser)
+                            if (databaseInsertUserMail != null && databaseInsertUserName != null) {
+                                createUser(databaseInsertUserMail, databaseInsertUserName)
                             }
 
                         }else {
@@ -91,12 +94,12 @@ class LoginViewModel() : ViewModel() {
     }
     //función para insertar en el FireBase de la aplicación el usuario por medio del campo único
     //de email
-    private fun createUser(user: String) {
+    private fun createUser(userMail: String, userName: String) {
 
-        val userData = hashMapOf("email" to user)
+        val userData = hashMapOf("email" to userMail, "name" to userName)
 
         db.collection(usersCollectionName)
-            .document(user)
+            .document(userMail)
             .set(userData, SetOptions.merge())
             .addOnSuccessListener {
                 //aquí se pondría un mensaje o popUp de bienvenida

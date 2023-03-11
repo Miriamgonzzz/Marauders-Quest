@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.example.maraudersquest.R
 import com.example.maraudersquest.common.PlayAudio
 import com.example.maraudersquest.index.ui.correoUsuario
+import com.example.maraudersquest.index.ui.nombreUsuario
 
 @Composable
 fun Baul(navController: NavController){
@@ -27,7 +28,7 @@ fun Baul(navController: NavController){
                 .fillMaxWidth()
                 .height(mapHeight)
         ) {
-            Text(text = "Bienvenido a tu espacio personal $correoUsuario ")
+            Text(text = "Bienvenido a tu espacio personal $nombreUsuario ")
             // Agregamos el resto del contenido de la vista
             Image(
                 painter = painterResource(R.drawable.avatarmarauder),
